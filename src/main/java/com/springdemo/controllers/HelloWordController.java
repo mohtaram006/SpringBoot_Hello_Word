@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/abc")
+@RequestMapping("/ncc")
 public class HelloWordController {
 
     @GetMapping
@@ -17,6 +17,6 @@ public class HelloWordController {
     @GetMapping("/welcome")
     public String welclome()
     {
-        return "welcome";
+        return "welcome To Login ";
     }
 }
