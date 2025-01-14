@@ -29,21 +29,13 @@ jobs:
           git reset --hard origin/master
         shell: cmd
 
-      # Step 3: Set up Maven and Java environment variables
-      - name: Set Environment Variables
-        run: |
-          echo "Setting up Maven and Java paths"
-          setx MAVEN_HOME "%MAVEN_HOME%"
-          setx PATH "%PATH%;%MAVEN_HOME%\bin"
-        shell: cmd
-
-      # Step 4: Build the Project with Maven
+      # Step 3: Build the Project with Maven
       - name: Build with Maven
         run: |
           call "%MAVEN_HOME%\bin\mvn" clean package
         shell: cmd
 
-      # Step 5: Deploy the WAR File to Tomcat
+      # Step 4: Deploy the WAR File to Tomcat
       - name: Deploy to Tomcat
         env:
           TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
@@ -53,12 +45,4 @@ jobs:
           curl -u %TOMCAT_USER%:%TOMCAT_PASS% ^
             --upload-file "%WAR_FILE%" ^
             "%TOMCAT_URL%/deploy?path=/%APP_CONTEXT%^&update=true"
-        shell: cmd
-
-      # Optional Step 6: Restart Tomcat (if required)
-      - name: Restart Tomcat
-        run: |
-          echo "Restarting Tomcat..."
-          call C:\apache-tomcat-9.0.80\bin\shutdown.bat
-          call C:\apache-tomcat-9.0.80\bin\startup.bat
         shell: cmd
