@@ -1,0 +1,62 @@
+name: Build and Deploy to Tomcat
+
+on:
+  push:
+    branches:
+      - main # Run workflow on push to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    env:
+      MAVEN_HOME: C:\apache-maven-3.9.9 # Path to Maven
+      TOMCAT_URL: http://localhost:8081/manager/text # Tomcat Manager URL
+      WAR_FILE: target\hello-word-0.0.1-SNAPSHOT.war # Path to WAR file
+      APP_CONTEXT: springboot-app # Context path for the deployed application
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Pull the latest changes
+      - name: Pull Latest Changes from Git
+        run: |
+          echo "Pulling latest changes from Git..."
+          git fetch --all
+          git reset --hard origin/main
+        shell: cmd
+
+      # Step 3: Set up Maven and Java environment variables
+      - name: Set Environment Variables
+        run: |
+          echo "Setting up Maven and Java paths"
+          setx MAVEN_HOME "%MAVEN_HOME%"
+          setx PATH "%PATH%;%MAVEN_HOME%\bin"
+
+      # Step 4: Build the Project with Maven
+      - name: Build with Maven
+        run: |
+          call "%MAVEN_HOME%\bin\mvn" clean package
+        shell: cmd
+
+      # Step 5: Deploy the WAR File to Tomcat
+      - name: Deploy to Tomcat
+        env:
+          TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
+          TOMCAT_PASS: ${{ secrets.TOMCAT_PASS }}
+        run: |
+          echo "Deploying to Tomcat..."
+          curl -u %TOMCAT_USER%:%TOMCAT_PASS% ^
+            --upload-file "%WAR_FILE%" ^
+            "%TOMCAT_URL%/deploy?path=/%APP_CONTEXT%^&update=true"
+        shell: cmd
+
+      # Optional Step 6: Restart Tomcat (if required)
+      - name: Restart Tomcat
+        run: |
+          echo "Restarting Tomcat..."
+          call C:\apache-tomcat-9.0.80\bin\shutdown.bat
+          call C:\apache-tomcat-9.0.80\bin\startup.bat
+        shell: cmd
