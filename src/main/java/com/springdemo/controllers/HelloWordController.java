@@ -17,6 +17,6 @@ public class HelloWordController {
     @GetMapping("/welcome")
     public String welclome()
     {
-        return "welcome To Login ";
+        return "welcome To  Spring boot  ";
     }
 }
