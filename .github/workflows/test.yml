@@ -1,0 +1,16 @@
+name: hello-world
+on: 
+  push:
+    branches:
+      - main  # Trigger the workflow when pushing to the 'main' branch
+
+jobs:
+  my-job:
+    runs-on: windows-latest  # Use Windows runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Pull the latest code from your repository
+
+      - name: Run Hello World
+        run: echo "Hello World!"  # Run the 'Hello World' message
