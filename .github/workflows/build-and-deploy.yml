@@ -46,7 +46,7 @@ jobs:
       # Step 5: Build the Project with Maven
       - name: Build with Maven
         run: |
-          call "C:\\apache-maven-3.9.9\\bin\\mvn" clean package
+          call "C:\apache-maven-3.9.9\bin\mvn" clean package
         shell: cmd
 
       # Step 6: Deploy the WAR File to Tomcat
