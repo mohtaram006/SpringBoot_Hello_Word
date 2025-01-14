@@ -1,8 +1,10 @@
 name: hello-world
-on: 
+
+on:
   push:
-  branches: - master
-  workflow_dispatch: 
+    branches:
+      - master  # Trigger workflow on push to 'master' branch
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
 
 jobs:
   my-job:
