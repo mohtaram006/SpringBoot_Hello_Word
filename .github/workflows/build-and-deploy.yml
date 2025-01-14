@@ -34,7 +34,7 @@ jobs:
         run: |
           echo "Setting up Maven and Java paths"
           set MAVEN_HOME=C:\apache-maven-3.9.9
-          set PATH=%PATH%;%MAVEN_HOME%\bin
+          set PATH=%PATH%;C:\apache-maven-3.9.9\bin
         shell: cmd
 
       # Step 4: Verify Maven installation
@@ -46,7 +46,7 @@ jobs:
       # Step 5: Build the Project with Maven
       - name: Build with Maven
         run: |
-          call "C:\apache-maven-3.9.9\bin\mvn" clean package
+          call "C:\\apache-maven-3.9.9\\bin\\mvn" clean package
         shell: cmd
 
       # Step 6: Deploy the WAR File to Tomcat
@@ -60,3 +60,5 @@ jobs:
             --upload-file "%WAR_FILE%" ^
             "%TOMCAT_URL%/deploy?path=/%APP_CONTEXT%^&update=true"
         shell: cmd
+
+  
