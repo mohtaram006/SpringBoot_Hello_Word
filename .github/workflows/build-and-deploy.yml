@@ -2,7 +2,8 @@ name: Build and Deploy to Tomcat
 
 on:
   push:
-  branches: - master  # Trigger workflow on push to 'master' branch
+    branches:
+      - master  # Trigger workflow on push to 'master' branch
   workflow_dispatch:  # Allows manual triggering from GitHub UI
 
 jobs:
@@ -10,10 +11,10 @@ jobs:
     runs-on: windows-latest
 
     env:
-      MAVEN_HOME: C:\apache-maven-3.9.9 # Path to Maven
-      TOMCAT_URL: http://localhost:8081/manager/text # Tomcat Manager URL
-      WAR_FILE: target\hello-word-0.0.1-SNAPSHOT.war # Path to WAR file
-      APP_CONTEXT: springboot-app # Context path for the deployed application
+      MAVEN_HOME: C:\apache-maven-3.9.9  # Path to Maven
+      TOMCAT_URL: http://localhost:8081/manager/text  # Tomcat Manager URL
+      WAR_FILE: target\hello-word-0.0.1-SNAPSHOT.war  # Path to WAR file
+      APP_CONTEXT: springboot-app  # Context path for the deployed application
 
     steps:
       # Step 1: Checkout the code
@@ -25,7 +26,7 @@ jobs:
         run: |
           echo "Pulling latest changes from Git..."
           git fetch --all
-          git reset --hard origin/main
+          git reset --hard origin/master
         shell: cmd
 
       # Step 3: Set up Maven and Java environment variables
@@ -34,6 +35,7 @@ jobs:
           echo "Setting up Maven and Java paths"
           setx MAVEN_HOME "%MAVEN_HOME%"
           setx PATH "%PATH%;%MAVEN_HOME%\bin"
+        shell: cmd
 
       # Step 4: Build the Project with Maven
       - name: Build with Maven
