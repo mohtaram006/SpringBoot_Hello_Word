@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      MAVEN_HOME: C:\\apache-maven-3.9.9 # Path to Maven
+      MAVEN_HOME: C:\apache-maven-3.9.9  # Path to Maven
       TOMCAT_URL: http://localhost:8081/manager/text  # Tomcat Manager URL
       WAR_FILE: target\hello-word-0.0.1-SNAPSHOT.war  # Path to WAR file
       APP_CONTEXT: springboot-app  # Context path for the deployed application
@@ -29,13 +29,27 @@ jobs:
           git reset --hard origin/master
         shell: cmd
 
-      # Step 3: Build the Project with Maven
-      - name: Build with Maven
+      # Step 3: Set up Maven and Java environment variables
+      - name: Set Environment Variables
         run: |
-          call "%MAVEN_HOME%\bin\mvn" clean package
+          echo "Setting up Maven and Java paths"
+          set MAVEN_HOME=C:\apache-maven-3.9.9
+          set PATH=%PATH%;%MAVEN_HOME%\bin
         shell: cmd
 
-      # Step 4: Deploy the WAR File to Tomcat
+      # Step 4: Verify Maven installation
+      - name: Verify Maven Installation
+        run: |
+          mvn -v
+        shell: cmd
+
+      # Step 5: Build the Project with Maven
+      - name: Build with Maven
+        run: |
+          call "C:\apache-maven-3.9.9\bin\mvn" clean package
+        shell: cmd
+
+      # Step 6: Deploy the WAR File to Tomcat
       - name: Deploy to Tomcat
         env:
           TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
