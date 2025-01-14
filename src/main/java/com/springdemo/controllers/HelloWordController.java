@@ -19,4 +19,10 @@ public class HelloWordController {
     {
         return "welcome To  Spring boot  ";
     }
+
+    @GetMapping("/hello")
+    public String hello()
+    {
+        return "Hello  To  Spring boot  ";
+    }
 }
