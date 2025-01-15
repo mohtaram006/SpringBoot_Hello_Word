@@ -12,15 +12,10 @@ jobs:
 
     steps:
       # Step 1: Checkout the code
-      - name: Checkout Repository
+      - name: Verify Access to C Drive
         uses: actions/checkout@v3
-
-      # Step 2: Set Maven Environment Variables
-      - name: Debug Environment
-        run: echo MAVEN_HOME=%MAVEN_HOME%
-        shell: cmd
-
-       # Step 2: Set Maven Environment Variables
-      - name: Verify Maven Installation
-        run: dir %MAVEN_HOME%\bin
+        
+       # Step 2: Checkout the code
+      - name: Verify Access to C Drive
+        run: dir C:\
         shell: cmd
