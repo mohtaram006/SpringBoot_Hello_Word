@@ -26,7 +26,6 @@ jobs:
       # Step 3: Verify Maven Path
       - name: Verify Maven Path
         run: |
-          set MAVEN_HOME=C:\apache-maven-3.9.9
           echo "MAVEN_HOME is set to: %MAVEN_HOME%"
           dir %MAVEN_HOME%\bin
         shell: cmd
