@@ -25,7 +25,14 @@ jobs:
           git reset --hard origin/master
         shell: cmd
 
-      # Step 3: Build the Project with Maven
+      # Step 3:: Verify Maven Path
+      - name: Verify Maven Path
+        run: |
+           echo "MAVEN_HOME is set to: %MAVEN_HOME%"
+           dir %MAVEN_HOME%\bin
+           shell: cmd
+
+      # Step 4: Build the Project with Maven
       - name: Build with Maven
         run: |
           call "C:\\apache-maven-3.9.9\bin\mvn" clean package
