@@ -3,8 +3,8 @@ name: Build and Deploy to Tomcat
 on:
   push:
     branches:
-      - master  # Trigger workflow on push to 'master' branch
-  workflow_dispatch:  # Allows manual triggering from GitHub UI
+      - master
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -15,17 +15,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Pull the latest changes
-      - name: Pull Latest Changes from Git
+      # Step 2: Set Maven Environment Variables
+      - name: Set Environment Variables
         run: |
-          echo "Pulling latest changes from Git..."
-          git fetch --all
-          git reset --hard origin/master
+          set M2_HOME=C:\apache-maven-3.9.9
+          set PATH=%PATH%;%M2_HOME%\bin
+          echo "M2_HOME is set to: %M2_HOME%"
+          dir %M2_HOME%\bin
         shell: cmd
 
-  
       # Step 3: Build the Project with Maven
       - name: Build with Maven
         run: |
-          call "%MAVEN_HOME%\bin\mvn" clean package
+          call "%M2_HOME%\bin\mvn" clean package
         shell: cmd
