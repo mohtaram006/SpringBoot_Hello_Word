@@ -35,16 +35,4 @@ jobs:
           call "C:\\apache-maven-3.9.9\bin\mvn" clean package
         shell: cmd
 
-      # Step 4: Deploy the WAR File to Tomcat
-      - name: Deploy to Tomcat
-        env:
-          TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
-          TOMCAT_PASS: ${{ secrets.TOMCAT_PASS }}
-        run: |
-          echo "Deploying to Tomcat..."
-          curl -u %TOMCAT_USER%:%TOMCAT_PASS% ^
-            --upload-file "%WAR_FILE%" ^
-            "%TOMCAT_URL%/deploy?path=/%APP_CONTEXT%^&update=true"
-        shell: cmd
 
-  
