@@ -26,5 +26,5 @@ jobs:
       # Step 3: Build the Project with Maven
       - name: Build with Maven
         run: |
-          call "C:\\Users\Mohtaram\Desktop\Mohtaram_Doc\apache-maven-3.9.9\bin\" clean package
+          call "C:\\Users\Mohtaram\Desktop\Mohtaram_Doc\apache-maven-3.9.9\bin\mvn" clean package
         shell: cmd
