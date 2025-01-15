@@ -12,10 +12,6 @@ jobs:
 
     env:
       MAVEN_HOME: C:\\apache-maven-3.9.9  # Path to Maven
-      TOMCAT_URL: http://localhost:8081/manager # Tomcat Manager URL
-      WAR_FILE: target\hello-word-0.0.1-SNAPSHOT.war  # Path to WAR file
-      APP_CONTEXT: springboot-app  # Context path for the deployed application
-
     steps:
       # Step 1: Checkout the code
       - name: Checkout Repository
