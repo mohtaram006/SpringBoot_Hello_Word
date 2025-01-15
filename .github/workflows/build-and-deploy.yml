@@ -23,15 +23,8 @@ jobs:
           git reset --hard origin/master
         shell: cmd
 
-      # Step 3: Verify Maven Path
-      - name: Verify Maven Path
-        run: |
-          echo "M2_HOME : %M2_HOME%"
-          dir %M2_HOME%\bin
-        shell: cmd
-
-      # Step 4: Build the Project with Maven
+      # Step 3: Build the Project with Maven
       - name: Build with Maven
         run: |
-          call "%M2_HOME%\bin\mvn" clean package
+          call "C:\\Users\Mohtaram\Desktop\Mohtaram_Doc\apache-maven-3.9.9\bin\" clean package
         shell: cmd
