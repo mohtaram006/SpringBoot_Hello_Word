@@ -43,15 +43,14 @@ jobs:
        TOMCAT_USER: maaz
        TOMCAT_PASSWORD: maaz
       run: |
-         # Define variables
-         WAR_FILE="target/*.war"
-         DEPLOY_PATH="D:/Software/webapps"
+        
+          # Define variables
+          WAR_FILE="target/*.war"
+          DEPLOY_PATH="D:/Soft/apache-tomcat-9.0.98/webapps"
 
-         # Upload WAR file to Tomcat server
-         scp "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
+          # Copy WAR file to Tomcat webapps directory
+          cp $WAR_FILE "$DEPLOY_PATH"
 
-         # Restart Tomcat server (example for Linux system)
-         ssh "$TOMCAT_USER@$TOMCAT_HOST" << EOF
-         sudo systemctl restart tomcat
-         EOF
+           # Restart Tomcat (local system)
+           sudo systemctl restart tomcat
 
