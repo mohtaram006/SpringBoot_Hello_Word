@@ -53,6 +53,8 @@ jobs:
         
         # Copy WAR file to Tomcat webapps directory
         cp "$WAR_FILE" "$DEPLOY_PATH"
+        ls -l "$DEPLOY_PATH"
+
         echo "WAR file copied successfully."
       env:
         TOMCAT_HOST: 127.0.0.1
