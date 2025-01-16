@@ -39,18 +39,7 @@ jobs:
 
     - name: Deploy to Tomcat Locally
       run: |
-        # Ensure the WAR file exists
-        if [ -f target/*.war ]; then
-          echo "WAR file found, proceeding with deployment."
-          WAR_FILE="target/*.war"
-          DEPLOY_PATH="C:/Users/Mohtaram/Documents/Tomcat 9.0/webapps"
-
-          # Copy WAR file to Tomcat webapps directory
-          cp "$WAR_FILE" "$DEPLOY_PATH"
-
-          # Restart Tomcat (local system)
-          sudo systemctl restart tomcat
-        else
-          echo "WAR file not found! Deployment aborted."
-          exit 1
-        fi
+          curl -u %TOMCAT_USER%:%TOMCAT_PASS% ^
+            --upload-file target\*.war ^
+            http://localhost:8081/manager/text/deploy?path=/springboot-app^&update=true
+      shell: cmd
