@@ -52,5 +52,5 @@ jobs:
           cp $WAR_FILE "$DEPLOY_PATH"
 
            # Restart Tomcat (local system)
-           sudo systemctl restart tomcat
+             sudo systemctl restart tomcat
 
