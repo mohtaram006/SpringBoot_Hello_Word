@@ -56,7 +56,3 @@ jobs:
         ls -l "$DEPLOY_PATH"
 
         echo "WAR file copied successfully."
-      env:
-        TOMCAT_HOST: 127.0.0.1
-        TOMCAT_USER: maaz
-        TOMCAT_PASSWORD: maaz
