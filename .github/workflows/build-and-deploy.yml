@@ -38,8 +38,12 @@ jobs:
       run: ls -l target/
 
     - name: Deploy to Tomcat Locally
+      env:
+        TOMCAT_HOST: 127.0.0.1
+        TOMCAT_USER: maaz
+        TOMCAT_PASSWORD: maaz
       run: |
-          curl -u %TOMCAT_USER%:%TOMCAT_PASS% ^
+          curl -u %TOMCAT_USER%:%TOMCAT_PASS% 
             --upload-file target\*.war ^
             http://localhost:8081/manager/text/deploy?path=/springboot-app^&update=true
       shell: cmd
