@@ -43,7 +43,7 @@ jobs:
         if [ -f target/*.war ]; then
           echo "WAR file found, proceeding with deployment."
           WAR_FILE="target/*.war"
-          DEPLOY_PATH="C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps"
+          DEPLOY_PATH="C:\Users\Mohtaram\Documents\Tomcat 9.0\webapps"
 
           # Copy WAR file to Tomcat webapps directory
           cp "$WAR_FILE" "$DEPLOY_PATH"
