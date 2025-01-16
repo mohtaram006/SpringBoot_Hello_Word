@@ -41,7 +41,7 @@ jobs:
       run: |
         # Define variables
         WAR_FILE=$(find target/ -name "*.war")
-        DEPLOY_PATH="D:\Soft\webapps"  # Ensure this is correct path for your Tomcat
+        DEPLOY_PATH=D:\Soft\webapps  # Ensure this is correct path for your Tomcat
 
         # Check if the WAR file exists
         if [ -z "$WAR_FILE" ]; then
@@ -50,7 +50,7 @@ jobs:
         fi
         
         echo "WAR file found, proceeding with deployment."
-        chmod 755  DEPLOY_PATH
+        chmod 755 D:\Soft\webapps
 
         # Copy WAR file to Tomcat webapps directory
         cp "$WAR_FILE" "$DEPLOY_PATH"
