@@ -44,6 +44,6 @@ jobs:
         TOMCAT_PASSWORD: maaz
       run: |
           curl -u %TOMCAT_USER%:%TOMCAT_PASS% 
-            --upload-file target\*.war ^
+            --upload-file target\*.war 
             http://localhost:8081/manager/text/deploy?path=/springboot-app^&update=true
       shell: cmd
