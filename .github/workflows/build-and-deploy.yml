@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build, Test, and Deploy
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -34,24 +34,23 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -DskipTests
 
-    - name: Upload WAR Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: spring-boot-app-war
-        path: target/*.war
+    - name: List target directory (debugging)
+      run: ls -l target/
 
-    - name: Deploy to Tomcat
-      env:
-        TOMCAT_HOST: 127.0.0.1  # Localhost or the IP address of your machine
-        TOMCAT_USER: maaz      # Your Tomcat admin username
-        TOMCAT_PASSWORD: maaz  # Your Tomcat admin password
+    - name: Deploy to Tomcat Locally
       run: |
-        # Define variables
-        WAR_FILE="target/*.war"
-        DEPLOY_PATH="C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps"
+        # Ensure the WAR file exists
+        if [ -f target/*.war ]; then
+          echo "WAR file found, proceeding with deployment."
+          WAR_FILE="target/*.war"
+          DEPLOY_PATH="C:/Program Files/Apache Software Foundation/Tomcat 9.0/webapps"
 
-        # Upload WAR file to Tomcat server
-        cp "$WAR_FILE" "$DEPLOY_PATH"
+          # Copy WAR file to Tomcat webapps directory
+          cp "$WAR_FILE" "$DEPLOY_PATH"
 
-        # Restart Tomcat server (example for Linux system)
-        sudo systemctl restart tomcat
+          # Restart Tomcat (local system)
+          sudo systemctl restart tomcat
+        else
+          echo "WAR file not found! Deployment aborted."
+          exit 1
+        fi
