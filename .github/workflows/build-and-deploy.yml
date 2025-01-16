@@ -54,10 +54,6 @@ jobs:
         # Copy WAR file to Tomcat webapps directory
         cp "$WAR_FILE" "$DEPLOY_PATH"
         echo "WAR file copied successfully."
-
-        # Restart Tomcat server (local system)
-        sudo systemctl restart tomcat
-        echo "Tomcat restarted."
       env:
         TOMCAT_HOST: 127.0.0.1
         TOMCAT_USER: maaz
