@@ -40,25 +40,25 @@ jobs:
     - name: Deploy to Tomcat
       run: |
         # Define variables
-        WAR_FILE="target/*.war"
+        WAR_FILE=$(find target/ -name "*.war")
         DEPLOY_PATH="D:/Soft/apache-tomcat-9.0.98/webapps"  # Ensure this is correct path for your Tomcat
 
         # Check if the WAR file exists
-        if [ -f "$WAR_FILE" ]; then
-          echo "WAR file found, proceeding with deployment."
-          # Copy WAR file to Tomcat webapps directory
-          cp "$WAR_FILE" "$DEPLOY_PATH"
-          echo "WAR file copied successfully."
-
-          # Restart Tomcat server (local system)
-          sudo systemctl restart tomcat
-          echo "Tomcat restarted."
-        else
+        if [ -z "$WAR_FILE" ]; then
           echo "WAR file not found! Deployment aborted."
           exit 1
         fi
+        
+        echo "WAR file found, proceeding with deployment."
+        
+        # Copy WAR file to Tomcat webapps directory
+        cp "$WAR_FILE" "$DEPLOY_PATH"
+        echo "WAR file copied successfully."
+
+        # Restart Tomcat server (local system)
+        sudo systemctl restart tomcat
+        echo "Tomcat restarted."
       env:
         TOMCAT_HOST: 127.0.0.1
         TOMCAT_USER: maaz
         TOMCAT_PASSWORD: maaz
-        shell: /bin/bash
