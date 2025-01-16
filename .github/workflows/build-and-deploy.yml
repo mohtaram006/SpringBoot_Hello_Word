@@ -42,9 +42,9 @@ jobs:
 
     - name: Deploy to Tomcat
       env:
-        TOMCAT_HOST: ${{ secrets.TOMCAT_HOST }}
-        TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
-        TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+        TOMCAT_HOST: 127.0.0.1  # Localhost or the IP address of your machine
+        TOMCAT_USER: maaz      # Your Tomcat admin username
+        TOMCAT_PASSWORD: maaz  # Your Tomcat admin password
       run: |
         # Define variables
         WAR_FILE="target/*.war"
