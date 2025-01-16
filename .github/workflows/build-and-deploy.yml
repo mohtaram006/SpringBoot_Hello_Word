@@ -41,7 +41,7 @@ jobs:
       run: |
         # Define variables
         WAR_FILE=$(find target/ -name "*.war")
-        DEPLOY_PATH="D:\Soft\apache-tomcat-9.0.98\webapps"  # Ensure this is correct path for your Tomcat
+        DEPLOY_PATH="D:/Soft/apache-tomcat-9.0.98/webapps"  # Ensure this is correct path for your Tomcat
 
         # Check if the WAR file exists
         if [ -z "$WAR_FILE" ]; then
