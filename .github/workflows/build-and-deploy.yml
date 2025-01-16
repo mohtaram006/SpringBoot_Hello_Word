@@ -48,7 +48,7 @@ jobs:
       run: |
         # Define variables
         WAR_FILE="target/*.war"
-        DEPLOY_PATH=C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps
+        DEPLOY_PATH="C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps"
 
         # Upload WAR file to Tomcat server
         scp $WAR_FILE $TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH
