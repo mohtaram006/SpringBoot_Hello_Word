@@ -50,9 +50,10 @@ jobs:
         fi
         
         echo "WAR file found, proceeding with deployment."
-        
+        chmod 755  DEPLOY_PATH
+
         # Copy WAR file to Tomcat webapps directory
         cp "$WAR_FILE" "$DEPLOY_PATH"
         ls -l "$DEPLOY_PATH"
-
+         cp target/*.war D:/Soft/webapps/
         echo "WAR file copied successfully."
