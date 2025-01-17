@@ -43,28 +43,13 @@ jobs:
       run: ls -l target/
 
     # Step 6: Deploy to Tomcat
-    - name: Deploy to Tomcat
+    - name: Deploy WAR to Local Tomcat
       run: |
         # Define variables
         WAR_FILE=$(find target/ -name "*.war")
-        DEST_PATH="D:/Soft/webapps" # Replace with your actual path
+        TOMCAT_USER=maaz
+        TOMCAT_HOST=localhost
+        TOMCAT_PATH="D:\Soft\webapps"
 
-        # Check if the WAR file exists
-        if [ -z "$WAR_FILE" ]; then
-          echo "WAR file not found! Deployment aborted."
-          exit 1
-        fi
-        echo "WAR file found at: $WAR_FILE"
-
-        # Ensure the destination directory exists
-        if [ ! -d "$DEST_PATH" ]; then
-          echo "Destination directory $DEST_PATH does not exist!"
-          exit 1
-        fi
-
-        # Copy the WAR file to the destination
-        cp "$WAR_FILE" "$DEST_PATH"
-        echo "WAR file copied successfully to $DEST_PATH"
-
-        # Verify the copy
-        ls -l "$DEST_PATH"
+        # Deploy WAR file to Tomcat server
+        scp -i ~/.ssh/id_rsa "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$TOMCAT_PATH"
