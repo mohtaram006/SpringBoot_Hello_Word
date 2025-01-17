@@ -35,12 +35,12 @@ jobs:
       run: mvn clean package -DskipTests
 
     - name: List target directory (debugging)
-      run: ls -l target/
+      run: ls -l target/  # Check the files in the target directory for the WAR file
 
     - name: Set up SSH key for deployment
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Use the private key stored in GitHub Secrets
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Ensure the private key is correctly added in GitHub Secrets
 
     - name: Deploy WAR file to Tomcat
       run: |
@@ -49,15 +49,19 @@ jobs:
         TOMCAT_USER=maaz
         TOMCAT_HOST=localhost
         DEPLOY_PATH="D:/Soft/webapps"  # Change this to the actual path on your local server
-        
+
         # Check if the WAR file exists
         if [ -z "$WAR_FILE" ]; then
           echo "WAR file not found! Deployment aborted."
           exit 1
         fi
 
-        echo "WAR file found, proceeding with deployment."
+        echo "WAR file found at: $WAR_FILE"
 
+        # Ensure the Tomcat server path is correct and accessible
+        echo "Deploying to Tomcat at: $TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
+        
         # Copy the WAR file to the Tomcat webapps directory
         scp "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
+        
         echo "WAR file copied successfully."
