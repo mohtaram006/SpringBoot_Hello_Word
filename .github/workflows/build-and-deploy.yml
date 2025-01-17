@@ -42,15 +42,26 @@ jobs:
     - name: List Target Directory
       run: ls -l target/
 
-    # Step 6: Deploy to Tomcat
-    - name: Deploy WAR to Local Tomcat
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to Tomcat
       run: |
         # Define variables
         WAR_FILE=$(find target/ -name "*.war")
-        TOMCAT_USER=maaz
-        TOMCAT_HOST=localhost
-        TOMCAT_PATH="D:\Soft\webapps"
+        DEPLOY_PATH="D:/Soft/webapps"  # Adjust this path if necessary
 
-        # Deploy WAR file to Tomcat server
-        scp -i ~/.ssh/id_rsa "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$TOMCAT_PATH"
+        # Check if the WAR file exists
+        if [ -z "$WAR_FILE" ]; then
+          echo "WAR file not found! Deployment aborted."
+          exit 1
+        fi
+
+        echo "WAR file found, proceeding with deployment."
+
+        # Copy the WAR file to the Tomcat webapps directory
+        scp "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
+        echo "WAR file copied successfully."
  
