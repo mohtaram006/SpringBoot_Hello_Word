@@ -53,3 +53,4 @@ jobs:
 
         # Deploy WAR file to Tomcat server
         scp -i ~/.ssh/id_rsa "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$TOMCAT_PATH"
+ 
