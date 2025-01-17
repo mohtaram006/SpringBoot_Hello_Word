@@ -48,18 +48,21 @@ jobs:
 
     - name: Deploy to Tomcat
       run: |
-        # Define variables
-        WAR_FILE=$(find target/ -name "*.war")
-        DEPLOY_PATH="D:/Soft/webapps"  # Adjust this path if necessary
+         # Define variables
+         WAR_FILE=$(find target/ -name "*.war")
+         DEPLOY_PATH="D:/Soft/webapps"  # Adjust this path if necessary
+         TOMCAT_USER=maaz
+         TOMCAT_HOST=localhost  # Ensure this is correct for your system
 
-        # Check if the WAR file exists
-        if [ -z "$WAR_FILE" ]; then
+          # Check if the WAR file exists
+          if [ -z "$WAR_FILE" ]; then
           echo "WAR file not found! Deployment aborted."
           exit 1
-        fi
+          fi
 
-        echo "WAR file found, proceeding with deployment."
+          echo "WAR file found, proceeding with deployment."
 
-        # Copy the WAR file to the Tomcat webapps directory
-        scp "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
-        echo "WAR file copied successfully."
+          # Copy the WAR file to the Tomcat webapps directory
+           scp "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
+           echo "WAR file copied successfully."
+
