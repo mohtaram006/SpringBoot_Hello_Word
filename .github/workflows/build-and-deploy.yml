@@ -46,7 +46,7 @@ jobs:
       run: |
         # Define the WAR file location
         WAR_FILE=$(find target/ -name "*.war")
-        TOMCAT_USER=maaz
+        TOMCAT_USER=mohtaram
         TOMCAT_HOST=localhost
         DEPLOY_PATH="D:/Soft/webapps"  # Change this to the actual path on your local server
 
