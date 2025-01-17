@@ -36,32 +36,23 @@ jobs:
 
     - name: List target directory (debugging)
       run: ls -l target/  # Check the files in the target directory for the WAR file
-
     - name: Set up SSH key for deployment
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Ensure the private key is correctly added in GitHub Secrets
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy WAR file to Tomcat
       run: |
-        # Define the WAR file location
         WAR_FILE=$(find target/ -name "*.war")
-        TOMCAT_USER=mohtaram
+        TOMCAT_USER=maaz
         TOMCAT_HOST=localhost
-        DEPLOY_PATH="D:/Soft/webapps"  # Change this to the actual path on your local server
-
-        # Check if the WAR file exists
+        DEPLOY_PATH="D:/Soft/webapps"  # Your Tomcat directory
+        
         if [ -z "$WAR_FILE" ]; then
-          echo "WAR file not found! Deployment aborted."
+          echo "WAR file not found!"
           exit 1
         fi
 
-        echo "WAR file found at: $WAR_FILE"
-
-        # Ensure the Tomcat server path is correct and accessible
-        echo "Deploying to Tomcat at: $TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
-        
-        # Copy the WAR file to the Tomcat webapps directory
+        echo "Deploying WAR file..."
         scp "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
-        
-        echo "WAR file copied successfully."
+  
