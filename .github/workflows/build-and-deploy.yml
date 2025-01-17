@@ -10,22 +10,19 @@ on:
 
 jobs:
   build:
-    name: Build and Deploy
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout Source Code
     - name: Checkout Source Code
       uses: actions/checkout@v3
 
-    # Step 2: Set Up JDK
     - name: Set Up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'temurin'
 
-    # Step 3: Cache Maven Dependencies
     - name: Cache Maven Dependencies
       uses: actions/cache@v3
       with:
@@ -34,18 +31,21 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # Step 4: Build with Maven
     - name: Build with Maven
       run: mvn clean package -DskipTests
 
-    # Step 5: List Target Directory (Debugging)
-    - name: List Target Directory
+    - name: List target directory (debugging)
       run: ls -l target/
 
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Add host to known hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan localhost >> ~/.ssh/known_hosts
 
     - name: Deploy to Tomcat
       run: |
@@ -64,4 +64,3 @@ jobs:
         # Copy the WAR file to the Tomcat webapps directory
         scp "$WAR_FILE" "$TOMCAT_USER@$TOMCAT_HOST:$DEPLOY_PATH"
         echo "WAR file copied successfully."
- 
